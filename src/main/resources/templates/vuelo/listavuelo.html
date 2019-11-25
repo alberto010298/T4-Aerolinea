@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container">
+
+		<h1>Lista de vuelos</h1>
+
+		<div class="card text-center">
+			<div class="card-header">Lista de vuelos</div>
+			<div class="card-body">
+				
+				<div th:if="${dangerDel}" class="alert alert-danger" role="alert">
+  					<span th:text="${dangerDel}"></span>
+				</div>
+			
+				<table bgcolor ="#FF9966" class="table table-striped">
+					<thead bgcolor ="#66FF66">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Fecha de ida</th>
+							<th scope="col">Fecha de retorno</th>
+							<th scope="col">Nombre</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody th:each="vuelo: ${vuelos}">
+						<tr>
+							<th scope="row" th:text="${vuelo.id}">1</th>
+							<td th:text="${vuelo.fechaIda}">Mark</td>
+							<td th:text="${vuelo.fechaVuelta}">Mark</td>
+							<td th:text="${vuelo.nombre}">Mark</td>
+							<td>
+					
+								<a sec:authorize="hasRole('ROLE_MANAGER')" th:href="@{ '/vuelo/editar/' + ${vuelo.id} }" class="btn btn-warning"> 
+									<i class="fas fa-edit"></i> 
+								</a>
+								<a sec:authorize="hasRole('ROLE_MANAGER')" th:href="@{ '/vuelo/delet/' + ${vuelo.id} }" class="btn btn-danger"> 
+									<i class="fas fa-trash-alt"></i> 
+								</a>							
+							</td>
+						</tr>						
+					</tbody>
+				</table>
+
+			</div>
+			<div sec:authorize="hasRole('ROLE_MANAGER')" class="card-footer text-muted">
+				<a th:href="@{/vuelo/nuevovuelo}" class="btn btn-primary"><i class="fas fa-file-alt"></i> Agregar Vuelo</a>
+			</div>
+		</div>
+
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
